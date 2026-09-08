@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Attachment
+ * InlineAttachment
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * Attachment Class Doc Comment
+ * InlineAttachment Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
+class InlineAttachment implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'Attachment';
+    protected static string $openAPIModelName = 'InlineAttachment';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -62,8 +62,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         'content' => 'string',
         'encoding' => 'string',
         'filename' => 'string',
-        'type' => 'string',
-        'attachment_id' => 'string'
+        'type' => 'string'
     ];
 
     /**
@@ -75,8 +74,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         'content' => null,
         'encoding' => null,
         'filename' => null,
-        'type' => null,
-        'attachment_id' => null
+        'type' => null
     ];
 
     /**
@@ -88,8 +86,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         'content' => false,
         'encoding' => false,
         'filename' => false,
-        'type' => false,
-        'attachment_id' => false
+        'type' => false
     ];
 
     /**
@@ -171,8 +168,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         'content' => 'content',
         'encoding' => 'encoding',
         'filename' => 'filename',
-        'type' => 'type',
-        'attachment_id' => 'attachment_id'
+        'type' => 'type'
     ];
 
     /**
@@ -184,8 +180,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         'content' => 'setContent',
         'encoding' => 'setEncoding',
         'filename' => 'setFilename',
-        'type' => 'setType',
-        'attachment_id' => 'setAttachmentId'
+        'type' => 'setType'
     ];
 
     /**
@@ -197,8 +192,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         'content' => 'getContent',
         'encoding' => 'getEncoding',
         'filename' => 'getFilename',
-        'type' => 'getType',
-        'attachment_id' => 'getAttachmentId'
+        'type' => 'getType'
     ];
 
     /**
@@ -267,7 +261,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         $this->setIfExists('encoding', $data ?? [], 'base64');
         $this->setIfExists('filename', $data ?? [], null);
         $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('attachment_id', $data ?? [], null);
     }
 
     /**
@@ -322,13 +315,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
             $invalidProperties[] = "invalid value for 'filename', the character length must be bigger than or equal to 1.";
         }
 
-        if ($this->container['attachment_id'] === null) {
-            $invalidProperties[] = "'attachment_id' can't be null";
-        }
-        if (!preg_match("/^att_[a-z0-9]{24}$/", $this->container['attachment_id'])) {
-            $invalidProperties[] = "invalid value for 'attachment_id', must be conform to the pattern /^att_[a-z0-9]{24}$/.";
-        }
-
         return $invalidProperties;
     }
 
@@ -365,7 +351,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         }
 
         if ((mb_strlen($content) < 1)) {
-            throw new InvalidArgumentException('invalid length for $content when calling Attachment., must be bigger than or equal to 1.');
+            throw new InvalidArgumentException('invalid length for $content when calling InlineAttachment., must be bigger than or equal to 1.');
         }
 
         $this->container['content'] = $content;
@@ -427,10 +413,10 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
             throw new InvalidArgumentException('non-nullable filename cannot be null');
         }
         if ((mb_strlen($filename) > 255)) {
-            throw new InvalidArgumentException('invalid length for $filename when calling Attachment., must be smaller than or equal to 255.');
+            throw new InvalidArgumentException('invalid length for $filename when calling InlineAttachment., must be smaller than or equal to 255.');
         }
         if ((mb_strlen($filename) < 1)) {
-            throw new InvalidArgumentException('invalid length for $filename when calling Attachment., must be bigger than or equal to 1.');
+            throw new InvalidArgumentException('invalid length for $filename when calling InlineAttachment., must be bigger than or equal to 1.');
         }
 
         $this->container['filename'] = $filename;
@@ -461,38 +447,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
             throw new InvalidArgumentException('non-nullable type cannot be null');
         }
         $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets attachment_id
-     *
-     * @return string
-     */
-    public function getAttachmentId(): string
-    {
-        return $this->container['attachment_id'];
-    }
-
-    /**
-     * Sets attachment_id
-     *
-     * @param string $attachment_id Temporary uploaded attachment ID returned by POST /emails/attachments.
-     *
-     * @return $this
-     */
-    public function setAttachmentId(string $attachment_id): static
-    {
-        if (is_null($attachment_id)) {
-            throw new InvalidArgumentException('non-nullable attachment_id cannot be null');
-        }
-
-        if ((!preg_match("/^att_[a-z0-9]{24}$/", ObjectSerializer::toString($attachment_id)))) {
-            throw new InvalidArgumentException("invalid value for \$attachment_id when calling Attachment., must conform to the pattern /^att_[a-z0-9]{24}$/.");
-        }
-
-        $this->container['attachment_id'] = $attachment_id;
 
         return $this;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Attachment
+ * UploadedAttachmentRef
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * Attachment Class Doc Comment
+ * UploadedAttachmentRef Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
+class UploadedAttachmentRef implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'Attachment';
+    protected static string $openAPIModelName = 'UploadedAttachmentRef';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,10 +59,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'content' => 'string',
-        'encoding' => 'string',
-        'filename' => 'string',
-        'type' => 'string',
         'attachment_id' => 'string'
     ];
 
@@ -72,10 +68,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'content' => null,
-        'encoding' => null,
-        'filename' => null,
-        'type' => null,
         'attachment_id' => null
     ];
 
@@ -85,10 +77,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'content' => false,
-        'encoding' => false,
-        'filename' => false,
-        'type' => false,
         'attachment_id' => false
     ];
 
@@ -168,10 +156,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'content' => 'content',
-        'encoding' => 'encoding',
-        'filename' => 'filename',
-        'type' => 'type',
         'attachment_id' => 'attachment_id'
     ];
 
@@ -181,10 +165,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'content' => 'setContent',
-        'encoding' => 'setEncoding',
-        'filename' => 'setFilename',
-        'type' => 'setType',
         'attachment_id' => 'setAttachmentId'
     ];
 
@@ -194,10 +174,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'content' => 'getContent',
-        'encoding' => 'getEncoding',
-        'filename' => 'getFilename',
-        'type' => 'getType',
         'attachment_id' => 'getAttachmentId'
     ];
 
@@ -233,21 +209,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const ENCODING_BASE64 = 'base64';
-    public const ENCODING_UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public static function getEncodingAllowableValues()
-    {
-        return [
-            self::ENCODING_BASE64,
-            self::ENCODING_UNKNOWN_DEFAULT_OPEN_API,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,10 +224,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('content', $data ?? [], null);
-        $this->setIfExists('encoding', $data ?? [], 'base64');
-        $this->setIfExists('filename', $data ?? [], null);
-        $this->setIfExists('type', $data ?? [], null);
         $this->setIfExists('attachment_id', $data ?? [], null);
     }
 
@@ -295,33 +252,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['content'] === null) {
-            $invalidProperties[] = "'content' can't be null";
-        }
-        if ((mb_strlen($this->container['content']) < 1)) {
-            $invalidProperties[] = "invalid value for 'content', the character length must be bigger than or equal to 1.";
-        }
-
-        $allowedValues = self::getEncodingAllowableValues();
-        if (!is_null($this->container['encoding']) && !in_array($this->container['encoding'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'encoding', must be one of '%s'",
-                $this->container['encoding'],
-                implode("', '", $allowedValues)
-            );
-        }
-
-        if ($this->container['filename'] === null) {
-            $invalidProperties[] = "'filename' can't be null";
-        }
-        if ((mb_strlen($this->container['filename']) > 255)) {
-            $invalidProperties[] = "invalid value for 'filename', the character length must be smaller than or equal to 255.";
-        }
-
-        if ((mb_strlen($this->container['filename']) < 1)) {
-            $invalidProperties[] = "invalid value for 'filename', the character length must be bigger than or equal to 1.";
-        }
-
         if ($this->container['attachment_id'] === null) {
             $invalidProperties[] = "'attachment_id' can't be null";
         }
@@ -340,130 +270,6 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets content
-     *
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->container['content'];
-    }
-
-    /**
-     * Sets content
-     *
-     * @param string $content Base64-encoded file content
-     *
-     * @return $this
-     */
-    public function setContent(string $content): static
-    {
-        if (is_null($content)) {
-            throw new InvalidArgumentException('non-nullable content cannot be null');
-        }
-
-        if ((mb_strlen($content) < 1)) {
-            throw new InvalidArgumentException('invalid length for $content when calling Attachment., must be bigger than or equal to 1.');
-        }
-
-        $this->container['content'] = $content;
-
-        return $this;
-    }
-
-    /**
-     * Gets encoding
-     *
-     * @return string|null
-     */
-    public function getEncoding(): ?string
-    {
-        return $this->container['encoding'];
-    }
-
-    /**
-     * Sets encoding
-     *
-     * @param string|null $encoding encoding
-     *
-     * @return $this
-     */
-    public function setEncoding(?string $encoding): static
-    {
-        if (is_null($encoding)) {
-            throw new InvalidArgumentException('non-nullable encoding cannot be null');
-        }
-        $allowedValues = self::getEncodingAllowableValues();
-        if (!in_array($encoding, $allowedValues, true)) {
-            $encoding = self::ENCODING_UNKNOWN_DEFAULT_OPEN_API;
-        }
-        $this->container['encoding'] = $encoding;
-
-        return $this;
-    }
-
-    /**
-     * Gets filename
-     *
-     * @return string
-     */
-    public function getFilename(): string
-    {
-        return $this->container['filename'];
-    }
-
-    /**
-     * Sets filename
-     *
-     * @param string $filename Filename with allowed extension
-     *
-     * @return $this
-     */
-    public function setFilename(string $filename): static
-    {
-        if (is_null($filename)) {
-            throw new InvalidArgumentException('non-nullable filename cannot be null');
-        }
-        if ((mb_strlen($filename) > 255)) {
-            throw new InvalidArgumentException('invalid length for $filename when calling Attachment., must be smaller than or equal to 255.');
-        }
-        if ((mb_strlen($filename) < 1)) {
-            throw new InvalidArgumentException('invalid length for $filename when calling Attachment., must be bigger than or equal to 1.');
-        }
-
-        $this->container['filename'] = $filename;
-
-        return $this;
-    }
-
-    /**
-     * Gets type
-     *
-     * @return string|null
-     */
-    public function getType(): ?string
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     *
-     * @param string|null $type MIME type override
-     *
-     * @return $this
-     */
-    public function setType(?string $type): static
-    {
-        if (is_null($type)) {
-            throw new InvalidArgumentException('non-nullable type cannot be null');
-        }
-        $this->container['type'] = $type;
-
-        return $this;
-    }
 
     /**
      * Gets attachment_id
@@ -489,7 +295,7 @@ class Attachment implements ModelInterface, ArrayAccess, JsonSerializable
         }
 
         if ((!preg_match("/^att_[a-z0-9]{24}$/", ObjectSerializer::toString($attachment_id)))) {
-            throw new InvalidArgumentException("invalid value for \$attachment_id when calling Attachment., must conform to the pattern /^att_[a-z0-9]{24}$/.");
+            throw new InvalidArgumentException("invalid value for \$attachment_id when calling UploadedAttachmentRef., must conform to the pattern /^att_[a-z0-9]{24}$/.");
         }
 
         $this->container['attachment_id'] = $attachment_id;
