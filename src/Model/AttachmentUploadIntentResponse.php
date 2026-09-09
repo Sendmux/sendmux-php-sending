@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchSendRequest
+ * AttachmentUploadIntentResponse
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * BatchSendRequest Class Doc Comment
+ * AttachmentUploadIntentResponse Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
+class AttachmentUploadIntentResponse implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'BatchSendRequest';
+    protected static string $openAPIModelName = 'AttachmentUploadIntentResponse';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,7 +59,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'messages' => '\Sendmux\Sending\Model\EmailSendRequest[]'
+        'meta' => '\Sendmux\Sending\Model\Meta',
+        'ok' => 'bool',
+        'data' => '\Sendmux\Sending\Model\AttachmentUploadIntentData'
     ];
 
     /**
@@ -68,7 +70,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'messages' => null
+        'meta' => null,
+        'ok' => null,
+        'data' => null
     ];
 
     /**
@@ -77,7 +81,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'meta' => false,
+        'ok' => false,
+        'data' => false
     ];
 
     /**
@@ -156,7 +162,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'messages' => 'messages'
+        'meta' => 'meta',
+        'ok' => 'ok',
+        'data' => 'data'
     ];
 
     /**
@@ -165,7 +173,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'messages' => 'setMessages'
+        'meta' => 'setMeta',
+        'ok' => 'setOk',
+        'data' => 'setData'
     ];
 
     /**
@@ -174,7 +184,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'messages' => 'getMessages'
+        'meta' => 'getMeta',
+        'ok' => 'getOk',
+        'data' => 'getData'
     ];
 
     /**
@@ -224,7 +236,9 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('meta', $data ?? [], null);
+        $this->setIfExists('ok', $data ?? [], null);
+        $this->setIfExists('data', $data ?? [], null);
     }
 
     /**
@@ -252,17 +266,15 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['messages'] === null) {
-            $invalidProperties[] = "'messages' can't be null";
+        if ($this->container['meta'] === null) {
+            $invalidProperties[] = "'meta' can't be null";
         }
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) > 100)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be less than or equal to 100.";
+        if ($this->container['ok'] === null) {
+            $invalidProperties[] = "'ok' can't be null";
         }
-
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) < 1)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be greater than or equal to 1.";
+        if ($this->container['data'] === null) {
+            $invalidProperties[] = "'data' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -276,35 +288,82 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
 
 
     /**
-     * Gets messages
+     * Gets meta
      *
-     * @return \Sendmux\Sending\Model\EmailSendRequest[]
+     * @return \Sendmux\Sending\Model\Meta
      */
-    public function getMessages(): array
+    public function getMeta(): \Sendmux\Sending\Model\Meta
     {
-        return $this->container['messages'];
+        return $this->container['meta'];
     }
 
     /**
-     * Sets messages
+     * Sets meta
      *
-     * @param \Sendmux\Sending\Model\EmailSendRequest[] $messages Array of email messages to send (max 100)
+     * @param \Sendmux\Sending\Model\Meta $meta meta
      *
      * @return $this
      */
-    public function setMessages(array $messages): static
+    public function setMeta(\Sendmux\Sending\Model\Meta $meta): static
     {
-        if (is_null($messages)) {
-            throw new InvalidArgumentException('non-nullable messages cannot be null');
+        if (is_null($meta)) {
+            throw new InvalidArgumentException('non-nullable meta cannot be null');
         }
+        $this->container['meta'] = $meta;
 
-        if ((count($messages) > 100)) {
-            throw new InvalidArgumentException('invalid value for $messages when calling BatchSendRequest., number of items must be less than or equal to 100.');
+        return $this;
+    }
+
+    /**
+     * Gets ok
+     *
+     * @return bool
+     */
+    public function getOk(): bool
+    {
+        return $this->container['ok'];
+    }
+
+    /**
+     * Sets ok
+     *
+     * @param bool $ok ok
+     *
+     * @return $this
+     */
+    public function setOk(bool $ok): static
+    {
+        if (is_null($ok)) {
+            throw new InvalidArgumentException('non-nullable ok cannot be null');
         }
-        if ((count($messages) < 1)) {
-            throw new InvalidArgumentException('invalid length for $messages when calling BatchSendRequest., number of items must be greater than or equal to 1.');
+        $this->container['ok'] = $ok;
+
+        return $this;
+    }
+
+    /**
+     * Gets data
+     *
+     * @return \Sendmux\Sending\Model\AttachmentUploadIntentData
+     */
+    public function getData(): \Sendmux\Sending\Model\AttachmentUploadIntentData
+    {
+        return $this->container['data'];
+    }
+
+    /**
+     * Sets data
+     *
+     * @param \Sendmux\Sending\Model\AttachmentUploadIntentData $data data
+     *
+     * @return $this
+     */
+    public function setData(\Sendmux\Sending\Model\AttachmentUploadIntentData $data): static
+    {
+        if (is_null($data)) {
+            throw new InvalidArgumentException('non-nullable data cannot be null');
         }
-        $this->container['messages'] = $messages;
+        $this->container['data'] = $data;
 
         return $this;
     }

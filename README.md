@@ -12,17 +12,19 @@ Read the PHP SDK guide at [sendmux.ai/docs/sdks/php](https://sendmux.ai/docs/sdk
 
 - PHP 8.2 or newer.
 - Composer.
-- A mailbox-scoped API key with the `smx_mbx_` prefix.
+- A send-capable `smx_mbx_` key or owner-approved Sending-resource `smx_agent_` token.
 
 ## Installation
 
 ```bash
-composer require sendmux/sending:^1.0
+composer require sendmux/sending:^2.0
 ```
+
+Upgrading from 1.x? Read the [PHP 2.0 migration guide](https://github.com/Sendmux/sendmux-sdk/blob/main/packages/php/UPGRADING.md) before changing your Composer constraint.
 
 ## Usage
 
-Create the API group client with a mailbox-scoped key.
+Create the API group client with a send-capable key.
 
 ```php
 <?php
@@ -40,11 +42,11 @@ $meta = ClientFactory::createMetaApi(
 );
 ```
 
-The generated `EmailsApi` exposes `sendingSendEmail()` and `sendingSendEmailBatch()`. The generated `MetaApi` exposes `sendingGetOpenApiSpec()`.
+The generated `EmailsApi` exposes `sendingSendEmail()` and `sendingSendEmailBatch()`. The generated `MetaApi` exposes `sendingGetConnection()` to test credentials without sending email, and `sendingGetOpenApiSpec()`.
 
 ## Features
 
-- Validates `smx_mbx_` API keys before configuring the client.
+- Validates `smx_mbx_` keys or owner-approved Sending-resource `smx_agent_` tokens before configuring the client.
 - Uses `https://smtp.sendmux.ai/api/v1` by default.
 - Adds retry and rate-limit backoff behaviour through `sendmux/core`.
 - Maps generated API responses into the shared Sendmux envelope and error model.

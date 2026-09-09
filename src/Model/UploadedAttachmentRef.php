@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchSendRequest
+ * UploadedAttachmentRef
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * BatchSendRequest Class Doc Comment
+ * UploadedAttachmentRef Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
+class UploadedAttachmentRef implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'BatchSendRequest';
+    protected static string $openAPIModelName = 'UploadedAttachmentRef';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,7 +59,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'messages' => '\Sendmux\Sending\Model\EmailSendRequest[]'
+        'attachment_id' => 'string'
     ];
 
     /**
@@ -68,7 +68,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'messages' => null
+        'attachment_id' => null
     ];
 
     /**
@@ -77,7 +77,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'attachment_id' => false
     ];
 
     /**
@@ -156,7 +156,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'messages' => 'messages'
+        'attachment_id' => 'attachment_id'
     ];
 
     /**
@@ -165,7 +165,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'messages' => 'setMessages'
+        'attachment_id' => 'setAttachmentId'
     ];
 
     /**
@@ -174,7 +174,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'messages' => 'getMessages'
+        'attachment_id' => 'getAttachmentId'
     ];
 
     /**
@@ -224,7 +224,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('attachment_id', $data ?? [], null);
     }
 
     /**
@@ -252,15 +252,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['messages'] === null) {
-            $invalidProperties[] = "'messages' can't be null";
+        if ($this->container['attachment_id'] === null) {
+            $invalidProperties[] = "'attachment_id' can't be null";
         }
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) > 100)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be less than or equal to 100.";
-        }
-
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) < 1)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be greater than or equal to 1.";
+        if (!is_null($this->container['attachment_id']) && !preg_match("/^att_[a-z0-9]{24}$/", $this->container['attachment_id'])) {
+            $invalidProperties[] = "invalid value for 'attachment_id', must be conform to the pattern /^att_[a-z0-9]{24}$/.";
         }
 
         return $invalidProperties;
@@ -276,35 +272,33 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
 
 
     /**
-     * Gets messages
+     * Gets attachment_id
      *
-     * @return \Sendmux\Sending\Model\EmailSendRequest[]
+     * @return string
      */
-    public function getMessages(): array
+    public function getAttachmentId(): string
     {
-        return $this->container['messages'];
+        return $this->container['attachment_id'];
     }
 
     /**
-     * Sets messages
+     * Sets attachment_id
      *
-     * @param \Sendmux\Sending\Model\EmailSendRequest[] $messages Array of email messages to send (max 100)
+     * @param string $attachment_id Temporary uploaded attachment ID returned by POST /emails/attachments.
      *
      * @return $this
      */
-    public function setMessages(array $messages): static
+    public function setAttachmentId(string $attachment_id): static
     {
-        if (is_null($messages)) {
-            throw new InvalidArgumentException('non-nullable messages cannot be null');
+        if (is_null($attachment_id)) {
+            throw new InvalidArgumentException('non-nullable attachment_id cannot be null');
         }
 
-        if ((count($messages) > 100)) {
-            throw new InvalidArgumentException('invalid value for $messages when calling BatchSendRequest., number of items must be less than or equal to 100.');
+        if ((!preg_match("/^att_[a-z0-9]{24}$/", ObjectSerializer::toString($attachment_id)))) {
+            throw new InvalidArgumentException("invalid value for \$attachment_id when calling UploadedAttachmentRef., must conform to the pattern /^att_[a-z0-9]{24}$/.");
         }
-        if ((count($messages) < 1)) {
-            throw new InvalidArgumentException('invalid length for $messages when calling BatchSendRequest., number of items must be greater than or equal to 1.');
-        }
-        $this->container['messages'] = $messages;
+
+        $this->container['attachment_id'] = $attachment_id;
 
         return $this;
     }

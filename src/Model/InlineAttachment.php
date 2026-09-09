@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchSendRequest
+ * InlineAttachment
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * BatchSendRequest Class Doc Comment
+ * InlineAttachment Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
+class InlineAttachment implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'BatchSendRequest';
+    protected static string $openAPIModelName = 'InlineAttachment';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,7 +59,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'messages' => '\Sendmux\Sending\Model\EmailSendRequest[]'
+        'content' => 'string',
+        'encoding' => 'string',
+        'filename' => 'string',
+        'type' => 'string'
     ];
 
     /**
@@ -68,7 +71,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'messages' => null
+        'content' => null,
+        'encoding' => null,
+        'filename' => null,
+        'type' => null
     ];
 
     /**
@@ -77,7 +83,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'content' => false,
+        'encoding' => false,
+        'filename' => false,
+        'type' => false
     ];
 
     /**
@@ -156,7 +165,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'messages' => 'messages'
+        'content' => 'content',
+        'encoding' => 'encoding',
+        'filename' => 'filename',
+        'type' => 'type'
     ];
 
     /**
@@ -165,7 +177,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'messages' => 'setMessages'
+        'content' => 'setContent',
+        'encoding' => 'setEncoding',
+        'filename' => 'setFilename',
+        'type' => 'setType'
     ];
 
     /**
@@ -174,7 +189,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'messages' => 'getMessages'
+        'content' => 'getContent',
+        'encoding' => 'getEncoding',
+        'filename' => 'getFilename',
+        'type' => 'getType'
     ];
 
     /**
@@ -209,6 +227,21 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const ENCODING_BASE64 = 'base64';
+    public const ENCODING_UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public static function getEncodingAllowableValues()
+    {
+        return [
+            self::ENCODING_BASE64,
+            self::ENCODING_UNKNOWN_DEFAULT_OPEN_API,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -224,7 +257,10 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('content', $data ?? [], null);
+        $this->setIfExists('encoding', $data ?? [], 'base64');
+        $this->setIfExists('filename', $data ?? [], null);
+        $this->setIfExists('type', $data ?? [], null);
     }
 
     /**
@@ -252,15 +288,31 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['messages'] === null) {
-            $invalidProperties[] = "'messages' can't be null";
+        if ($this->container['content'] === null) {
+            $invalidProperties[] = "'content' can't be null";
         }
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) > 100)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be less than or equal to 100.";
+        if (!is_null($this->container['content']) && (mb_strlen($this->container['content']) < 1)) {
+            $invalidProperties[] = "invalid value for 'content', the character length must be bigger than or equal to 1.";
         }
 
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) < 1)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be greater than or equal to 1.";
+        $allowedValues = self::getEncodingAllowableValues();
+        if (!is_null($this->container['encoding']) && !in_array($this->container['encoding'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'encoding', must be one of '%s'",
+                $this->container['encoding'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if ($this->container['filename'] === null) {
+            $invalidProperties[] = "'filename' can't be null";
+        }
+        if (!is_null($this->container['filename']) && (mb_strlen($this->container['filename']) > 255)) {
+            $invalidProperties[] = "invalid value for 'filename', the character length must be smaller than or equal to 255.";
+        }
+
+        if (!is_null($this->container['filename']) && (mb_strlen($this->container['filename']) < 1)) {
+            $invalidProperties[] = "invalid value for 'filename', the character length must be bigger than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -276,35 +328,125 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
 
 
     /**
-     * Gets messages
+     * Gets content
      *
-     * @return \Sendmux\Sending\Model\EmailSendRequest[]
+     * @return string
      */
-    public function getMessages(): array
+    public function getContent(): string
     {
-        return $this->container['messages'];
+        return $this->container['content'];
     }
 
     /**
-     * Sets messages
+     * Sets content
      *
-     * @param \Sendmux\Sending\Model\EmailSendRequest[] $messages Array of email messages to send (max 100)
+     * @param string $content Base64-encoded file content
      *
      * @return $this
      */
-    public function setMessages(array $messages): static
+    public function setContent(string $content): static
     {
-        if (is_null($messages)) {
-            throw new InvalidArgumentException('non-nullable messages cannot be null');
+        if (is_null($content)) {
+            throw new InvalidArgumentException('non-nullable content cannot be null');
         }
 
-        if ((count($messages) > 100)) {
-            throw new InvalidArgumentException('invalid value for $messages when calling BatchSendRequest., number of items must be less than or equal to 100.');
+        if ((mb_strlen($content) < 1)) {
+            throw new InvalidArgumentException('invalid length for $content when calling InlineAttachment., must be bigger than or equal to 1.');
         }
-        if ((count($messages) < 1)) {
-            throw new InvalidArgumentException('invalid length for $messages when calling BatchSendRequest., number of items must be greater than or equal to 1.');
+
+        $this->container['content'] = $content;
+
+        return $this;
+    }
+
+    /**
+     * Gets encoding
+     *
+     * @return string|null
+     */
+    public function getEncoding(): ?string
+    {
+        return $this->container['encoding'];
+    }
+
+    /**
+     * Sets encoding
+     *
+     * @param string|null $encoding encoding
+     *
+     * @return $this
+     */
+    public function setEncoding(?string $encoding): static
+    {
+        if (is_null($encoding)) {
+            throw new InvalidArgumentException('non-nullable encoding cannot be null');
         }
-        $this->container['messages'] = $messages;
+        $allowedValues = self::getEncodingAllowableValues();
+        if (!in_array($encoding, $allowedValues, true)) {
+            $encoding = self::ENCODING_UNKNOWN_DEFAULT_OPEN_API;
+        }
+        $this->container['encoding'] = $encoding;
+
+        return $this;
+    }
+
+    /**
+     * Gets filename
+     *
+     * @return string
+     */
+    public function getFilename(): string
+    {
+        return $this->container['filename'];
+    }
+
+    /**
+     * Sets filename
+     *
+     * @param string $filename Filename with allowed extension
+     *
+     * @return $this
+     */
+    public function setFilename(string $filename): static
+    {
+        if (is_null($filename)) {
+            throw new InvalidArgumentException('non-nullable filename cannot be null');
+        }
+        if ((mb_strlen($filename) > 255)) {
+            throw new InvalidArgumentException('invalid length for $filename when calling InlineAttachment., must be smaller than or equal to 255.');
+        }
+        if ((mb_strlen($filename) < 1)) {
+            throw new InvalidArgumentException('invalid length for $filename when calling InlineAttachment., must be bigger than or equal to 1.');
+        }
+
+        $this->container['filename'] = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Gets type
+     *
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->container['type'];
+    }
+
+    /**
+     * Sets type
+     *
+     * @param string|null $type MIME type override
+     *
+     * @return $this
+     */
+    public function setType(?string $type): static
+    {
+        if (is_null($type)) {
+            throw new InvalidArgumentException('non-nullable type cannot be null');
+        }
+        $this->container['type'] = $type;
 
         return $this;
     }

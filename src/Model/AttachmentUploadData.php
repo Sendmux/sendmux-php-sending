@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchSendRequest
+ * AttachmentUploadData
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * BatchSendRequest Class Doc Comment
+ * AttachmentUploadData Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
+class AttachmentUploadData implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'BatchSendRequest';
+    protected static string $openAPIModelName = 'AttachmentUploadData';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,7 +59,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'messages' => '\Sendmux\Sending\Model\EmailSendRequest[]'
+        'attachment_id' => 'string',
+        'content_type' => 'string',
+        'expires_at' => '\DateTime',
+        'filename' => 'string',
+        'size_bytes' => 'int'
     ];
 
     /**
@@ -68,7 +72,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'messages' => null
+        'attachment_id' => null,
+        'content_type' => null,
+        'expires_at' => 'date-time',
+        'filename' => null,
+        'size_bytes' => null
     ];
 
     /**
@@ -77,7 +85,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'attachment_id' => false,
+        'content_type' => false,
+        'expires_at' => false,
+        'filename' => false,
+        'size_bytes' => false
     ];
 
     /**
@@ -156,7 +168,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'messages' => 'messages'
+        'attachment_id' => 'attachment_id',
+        'content_type' => 'content_type',
+        'expires_at' => 'expires_at',
+        'filename' => 'filename',
+        'size_bytes' => 'size_bytes'
     ];
 
     /**
@@ -165,7 +181,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'messages' => 'setMessages'
+        'attachment_id' => 'setAttachmentId',
+        'content_type' => 'setContentType',
+        'expires_at' => 'setExpiresAt',
+        'filename' => 'setFilename',
+        'size_bytes' => 'setSizeBytes'
     ];
 
     /**
@@ -174,7 +194,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'messages' => 'getMessages'
+        'attachment_id' => 'getAttachmentId',
+        'content_type' => 'getContentType',
+        'expires_at' => 'getExpiresAt',
+        'filename' => 'getFilename',
+        'size_bytes' => 'getSizeBytes'
     ];
 
     /**
@@ -224,7 +248,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('attachment_id', $data ?? [], null);
+        $this->setIfExists('content_type', $data ?? [], null);
+        $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('filename', $data ?? [], null);
+        $this->setIfExists('size_bytes', $data ?? [], null);
     }
 
     /**
@@ -252,17 +280,25 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['messages'] === null) {
-            $invalidProperties[] = "'messages' can't be null";
+        if ($this->container['attachment_id'] === null) {
+            $invalidProperties[] = "'attachment_id' can't be null";
         }
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) > 100)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be less than or equal to 100.";
-        }
-
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) < 1)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be greater than or equal to 1.";
+        if (!is_null($this->container['attachment_id']) && !preg_match("/^att_[a-z0-9]{24}$/", $this->container['attachment_id'])) {
+            $invalidProperties[] = "invalid value for 'attachment_id', must be conform to the pattern /^att_[a-z0-9]{24}$/.";
         }
 
+        if ($this->container['content_type'] === null) {
+            $invalidProperties[] = "'content_type' can't be null";
+        }
+        if ($this->container['expires_at'] === null) {
+            $invalidProperties[] = "'expires_at' can't be null";
+        }
+        if ($this->container['filename'] === null) {
+            $invalidProperties[] = "'filename' can't be null";
+        }
+        if ($this->container['size_bytes'] === null) {
+            $invalidProperties[] = "'size_bytes' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -276,35 +312,141 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
 
 
     /**
-     * Gets messages
+     * Gets attachment_id
      *
-     * @return \Sendmux\Sending\Model\EmailSendRequest[]
+     * @return string
      */
-    public function getMessages(): array
+    public function getAttachmentId(): string
     {
-        return $this->container['messages'];
+        return $this->container['attachment_id'];
     }
 
     /**
-     * Sets messages
+     * Sets attachment_id
      *
-     * @param \Sendmux\Sending\Model\EmailSendRequest[] $messages Array of email messages to send (max 100)
+     * @param string $attachment_id Temporary attachment ID to use in email attachments[].
      *
      * @return $this
      */
-    public function setMessages(array $messages): static
+    public function setAttachmentId(string $attachment_id): static
     {
-        if (is_null($messages)) {
-            throw new InvalidArgumentException('non-nullable messages cannot be null');
+        if (is_null($attachment_id)) {
+            throw new InvalidArgumentException('non-nullable attachment_id cannot be null');
         }
 
-        if ((count($messages) > 100)) {
-            throw new InvalidArgumentException('invalid value for $messages when calling BatchSendRequest., number of items must be less than or equal to 100.');
+        if ((!preg_match("/^att_[a-z0-9]{24}$/", ObjectSerializer::toString($attachment_id)))) {
+            throw new InvalidArgumentException("invalid value for \$attachment_id when calling AttachmentUploadData., must conform to the pattern /^att_[a-z0-9]{24}$/.");
         }
-        if ((count($messages) < 1)) {
-            throw new InvalidArgumentException('invalid length for $messages when calling BatchSendRequest., number of items must be greater than or equal to 1.');
+
+        $this->container['attachment_id'] = $attachment_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets content_type
+     *
+     * @return string
+     */
+    public function getContentType(): string
+    {
+        return $this->container['content_type'];
+    }
+
+    /**
+     * Sets content_type
+     *
+     * @param string $content_type Stored attachment MIME type
+     *
+     * @return $this
+     */
+    public function setContentType(string $content_type): static
+    {
+        if (is_null($content_type)) {
+            throw new InvalidArgumentException('non-nullable content_type cannot be null');
         }
-        $this->container['messages'] = $messages;
+        $this->container['content_type'] = $content_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets expires_at
+     *
+     * @return \DateTime
+     */
+    public function getExpiresAt(): \DateTime
+    {
+        return $this->container['expires_at'];
+    }
+
+    /**
+     * Sets expires_at
+     *
+     * @param \DateTime $expires_at ISO timestamp when this temporary attachment reference expires.
+     *
+     * @return $this
+     */
+    public function setExpiresAt(\DateTime $expires_at): static
+    {
+        if (is_null($expires_at)) {
+            throw new InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets filename
+     *
+     * @return string
+     */
+    public function getFilename(): string
+    {
+        return $this->container['filename'];
+    }
+
+    /**
+     * Sets filename
+     *
+     * @param string $filename Stored attachment filename
+     *
+     * @return $this
+     */
+    public function setFilename(string $filename): static
+    {
+        if (is_null($filename)) {
+            throw new InvalidArgumentException('non-nullable filename cannot be null');
+        }
+        $this->container['filename'] = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Gets size_bytes
+     *
+     * @return int
+     */
+    public function getSizeBytes(): int
+    {
+        return $this->container['size_bytes'];
+    }
+
+    /**
+     * Sets size_bytes
+     *
+     * @param int $size_bytes Stored attachment byte size
+     *
+     * @return $this
+     */
+    public function setSizeBytes(int $size_bytes): static
+    {
+        if (is_null($size_bytes)) {
+            throw new InvalidArgumentException('non-nullable size_bytes cannot be null');
+        }
+        $this->container['size_bytes'] = $size_bytes;
 
         return $this;
     }

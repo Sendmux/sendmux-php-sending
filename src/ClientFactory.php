@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sendmux\Sending;
 
+use Sendmux\Sending\Api\AttachmentsApi;
 use Sendmux\Sending\Api\EmailsApi;
 use Sendmux\Sending\Api\MetaApi;
 use GuzzleHttp\Client;
@@ -24,7 +25,7 @@ final class ClientFactory
         }
 
         /** @var Configuration $configured */
-        $configured = Auth::configureBearer($configuration, $apiKey, ApiKeySurface::Mailbox);
+        $configured = Auth::configureBearer($configuration, $apiKey, ApiKeySurface::Sending);
         return $configured;
     }
 
@@ -34,6 +35,17 @@ final class ClientFactory
         $stack->push(RetryMiddleware::create($retryOptions), 'sendmux_retry');
 
         return new Client(['handler' => $stack]);
+    }
+
+    public static function createAttachmentsApi(
+        string $apiKey,
+        ?string $baseUrl = null,
+        ?RetryOptions $retryOptions = null
+    ): AttachmentsApi {
+        return new AttachmentsApi(
+            self::httpClient($retryOptions),
+            self::configuration($apiKey, $baseUrl)
+        );
     }
 
     public static function createEmailsApi(

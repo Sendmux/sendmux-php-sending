@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchSendRequest
+ * AttachmentUploadIntentData
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * BatchSendRequest Class Doc Comment
+ * AttachmentUploadIntentData Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
+class AttachmentUploadIntentData implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'BatchSendRequest';
+    protected static string $openAPIModelName = 'AttachmentUploadIntentData';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,7 +59,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'messages' => '\Sendmux\Sending\Model\EmailSendRequest[]'
+        'expires_at' => '\DateTime',
+        'headers' => 'array<string,string>',
+        'max_size_bytes' => 'int',
+        'method' => 'string',
+        'upload_id' => 'string',
+        'upload_url' => 'string'
     ];
 
     /**
@@ -68,7 +73,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'messages' => null
+        'expires_at' => 'date-time',
+        'headers' => null,
+        'max_size_bytes' => null,
+        'method' => null,
+        'upload_id' => null,
+        'upload_url' => 'uri'
     ];
 
     /**
@@ -77,7 +87,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'expires_at' => false,
+        'headers' => false,
+        'max_size_bytes' => false,
+        'method' => false,
+        'upload_id' => false,
+        'upload_url' => false
     ];
 
     /**
@@ -156,7 +171,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'messages' => 'messages'
+        'expires_at' => 'expires_at',
+        'headers' => 'headers',
+        'max_size_bytes' => 'max_size_bytes',
+        'method' => 'method',
+        'upload_id' => 'upload_id',
+        'upload_url' => 'upload_url'
     ];
 
     /**
@@ -165,7 +185,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'messages' => 'setMessages'
+        'expires_at' => 'setExpiresAt',
+        'headers' => 'setHeaders',
+        'max_size_bytes' => 'setMaxSizeBytes',
+        'method' => 'setMethod',
+        'upload_id' => 'setUploadId',
+        'upload_url' => 'setUploadUrl'
     ];
 
     /**
@@ -174,7 +199,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'messages' => 'getMessages'
+        'expires_at' => 'getExpiresAt',
+        'headers' => 'getHeaders',
+        'max_size_bytes' => 'getMaxSizeBytes',
+        'method' => 'getMethod',
+        'upload_id' => 'getUploadId',
+        'upload_url' => 'getUploadUrl'
     ];
 
     /**
@@ -209,6 +239,21 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const METHOD_PUT = 'PUT';
+    public const METHOD_UNKNOWN_DEFAULT_OPEN_API = 'unknown_default_open_api';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public static function getMethodAllowableValues()
+    {
+        return [
+            self::METHOD_PUT,
+            self::METHOD_UNKNOWN_DEFAULT_OPEN_API,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -224,7 +269,12 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('headers', $data ?? [], null);
+        $this->setIfExists('max_size_bytes', $data ?? [], null);
+        $this->setIfExists('method', $data ?? [], null);
+        $this->setIfExists('upload_id', $data ?? [], null);
+        $this->setIfExists('upload_url', $data ?? [], null);
     }
 
     /**
@@ -252,17 +302,37 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['messages'] === null) {
-            $invalidProperties[] = "'messages' can't be null";
+        if ($this->container['expires_at'] === null) {
+            $invalidProperties[] = "'expires_at' can't be null";
         }
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) > 100)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be less than or equal to 100.";
+        if ($this->container['headers'] === null) {
+            $invalidProperties[] = "'headers' can't be null";
+        }
+        if ($this->container['max_size_bytes'] === null) {
+            $invalidProperties[] = "'max_size_bytes' can't be null";
+        }
+        if ($this->container['method'] === null) {
+            $invalidProperties[] = "'method' can't be null";
+        }
+        $allowedValues = self::getMethodAllowableValues();
+        if (!is_null($this->container['method']) && !in_array($this->container['method'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'method', must be one of '%s'",
+                $this->container['method'],
+                implode("', '", $allowedValues)
+            );
         }
 
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) < 1)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be greater than or equal to 1.";
+        if ($this->container['upload_id'] === null) {
+            $invalidProperties[] = "'upload_id' can't be null";
+        }
+        if (!is_null($this->container['upload_id']) && !preg_match("/^upl_[a-z0-9]{24}$/", $this->container['upload_id'])) {
+            $invalidProperties[] = "invalid value for 'upload_id', must be conform to the pattern /^upl_[a-z0-9]{24}$/.";
         }
 
+        if ($this->container['upload_url'] === null) {
+            $invalidProperties[] = "'upload_url' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -276,35 +346,172 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
 
 
     /**
-     * Gets messages
+     * Gets expires_at
      *
-     * @return \Sendmux\Sending\Model\EmailSendRequest[]
+     * @return \DateTime
      */
-    public function getMessages(): array
+    public function getExpiresAt(): \DateTime
     {
-        return $this->container['messages'];
+        return $this->container['expires_at'];
     }
 
     /**
-     * Sets messages
+     * Sets expires_at
      *
-     * @param \Sendmux\Sending\Model\EmailSendRequest[] $messages Array of email messages to send (max 100)
+     * @param \DateTime $expires_at ISO timestamp when the upload URL expires.
      *
      * @return $this
      */
-    public function setMessages(array $messages): static
+    public function setExpiresAt(\DateTime $expires_at): static
     {
-        if (is_null($messages)) {
-            throw new InvalidArgumentException('non-nullable messages cannot be null');
+        if (is_null($expires_at)) {
+            throw new InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets headers
+     *
+     * @return array<string,string>
+     */
+    public function getHeaders(): array
+    {
+        return $this->container['headers'];
+    }
+
+    /**
+     * Sets headers
+     *
+     * @param array<string,string> $headers Headers that must be sent with the PUT upload request.
+     *
+     * @return $this
+     */
+    public function setHeaders(array $headers): static
+    {
+        if (is_null($headers)) {
+            throw new InvalidArgumentException('non-nullable headers cannot be null');
+        }
+        $this->container['headers'] = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Gets max_size_bytes
+     *
+     * @return int
+     */
+    public function getMaxSizeBytes(): int
+    {
+        return $this->container['max_size_bytes'];
+    }
+
+    /**
+     * Sets max_size_bytes
+     *
+     * @param int $max_size_bytes Maximum upload size in bytes
+     *
+     * @return $this
+     */
+    public function setMaxSizeBytes(int $max_size_bytes): static
+    {
+        if (is_null($max_size_bytes)) {
+            throw new InvalidArgumentException('non-nullable max_size_bytes cannot be null');
+        }
+        $this->container['max_size_bytes'] = $max_size_bytes;
+
+        return $this;
+    }
+
+    /**
+     * Gets method
+     *
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->container['method'];
+    }
+
+    /**
+     * Sets method
+     *
+     * @param string $method HTTP method for upload_url
+     *
+     * @return $this
+     */
+    public function setMethod(string $method): static
+    {
+        if (is_null($method)) {
+            throw new InvalidArgumentException('non-nullable method cannot be null');
+        }
+        $allowedValues = self::getMethodAllowableValues();
+        if (!in_array($method, $allowedValues, true)) {
+            $method = self::METHOD_UNKNOWN_DEFAULT_OPEN_API;
+        }
+        $this->container['method'] = $method;
+
+        return $this;
+    }
+
+    /**
+     * Gets upload_id
+     *
+     * @return string
+     */
+    public function getUploadId(): string
+    {
+        return $this->container['upload_id'];
+    }
+
+    /**
+     * Sets upload_id
+     *
+     * @param string $upload_id Temporary upload intent ID.
+     *
+     * @return $this
+     */
+    public function setUploadId(string $upload_id): static
+    {
+        if (is_null($upload_id)) {
+            throw new InvalidArgumentException('non-nullable upload_id cannot be null');
         }
 
-        if ((count($messages) > 100)) {
-            throw new InvalidArgumentException('invalid value for $messages when calling BatchSendRequest., number of items must be less than or equal to 100.');
+        if ((!preg_match("/^upl_[a-z0-9]{24}$/", ObjectSerializer::toString($upload_id)))) {
+            throw new InvalidArgumentException("invalid value for \$upload_id when calling AttachmentUploadIntentData., must conform to the pattern /^upl_[a-z0-9]{24}$/.");
         }
-        if ((count($messages) < 1)) {
-            throw new InvalidArgumentException('invalid length for $messages when calling BatchSendRequest., number of items must be greater than or equal to 1.');
+
+        $this->container['upload_id'] = $upload_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets upload_url
+     *
+     * @return string
+     */
+    public function getUploadUrl(): string
+    {
+        return $this->container['upload_url'];
+    }
+
+    /**
+     * Sets upload_url
+     *
+     * @param string $upload_url Short-lived URL that accepts a binary PUT with the returned headers.
+     *
+     * @return $this
+     */
+    public function setUploadUrl(string $upload_url): static
+    {
+        if (is_null($upload_url)) {
+            throw new InvalidArgumentException('non-nullable upload_url cannot be null');
         }
-        $this->container['messages'] = $messages;
+        $this->container['upload_url'] = $upload_url;
 
         return $this;
     }

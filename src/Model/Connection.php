@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BatchSendRequest
+ * Connection
  *
  * PHP version 8.1
  *
@@ -35,14 +35,14 @@ use ReturnTypeWillChange;
 use Sendmux\Sending\ObjectSerializer;
 
 /**
- * BatchSendRequest Class Doc Comment
+ * Connection Class Doc Comment
  *
  * @package  Sendmux\Sending
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements ArrayAccess<string, mixed>
  */
-class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
+class Connection implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      *
      * @var string
      */
-    protected static string $openAPIModelName = 'BatchSendRequest';
+    protected static string $openAPIModelName = 'Connection';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,7 +59,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $openAPITypes = [
-        'messages' => '\Sendmux\Sending\Model\EmailSendRequest[]'
+        'credential' => '\Sendmux\Sending\Model\ConnectionCredential',
+        'label' => 'string',
+        'mailboxes' => '\Sendmux\Sending\Model\ConnectionMailboxesInner[]',
+        'permissions' => 'string[]',
+        'team' => '\Sendmux\Sending\Model\ConnectionTeam'
     ];
 
     /**
@@ -68,7 +72,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string|null>
      */
     protected static array $openAPIFormats = [
-        'messages' => null
+        'credential' => null,
+        'label' => null,
+        'mailboxes' => null,
+        'permissions' => null,
+        'team' => null
     ];
 
     /**
@@ -77,7 +85,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, bool>
      */
     protected static array $openAPINullables = [
-        'messages' => false
+        'credential' => false,
+        'label' => false,
+        'mailboxes' => false,
+        'permissions' => false,
+        'team' => false
     ];
 
     /**
@@ -156,7 +168,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $attributeMap = [
-        'messages' => 'messages'
+        'credential' => 'credential',
+        'label' => 'label',
+        'mailboxes' => 'mailboxes',
+        'permissions' => 'permissions',
+        'team' => 'team'
     ];
 
     /**
@@ -165,7 +181,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $setters = [
-        'messages' => 'setMessages'
+        'credential' => 'setCredential',
+        'label' => 'setLabel',
+        'mailboxes' => 'setMailboxes',
+        'permissions' => 'setPermissions',
+        'team' => 'setTeam'
     ];
 
     /**
@@ -174,7 +194,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      * @var array<string, string>
      */
     protected static array $getters = [
-        'messages' => 'getMessages'
+        'credential' => 'getCredential',
+        'label' => 'getLabel',
+        'mailboxes' => 'getMailboxes',
+        'permissions' => 'getPermissions',
+        'team' => 'getTeam'
     ];
 
     /**
@@ -224,7 +248,11 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('messages', $data ?? [], null);
+        $this->setIfExists('credential', $data ?? [], null);
+        $this->setIfExists('label', $data ?? [], null);
+        $this->setIfExists('mailboxes', $data ?? [], null);
+        $this->setIfExists('permissions', $data ?? [], null);
+        $this->setIfExists('team', $data ?? [], null);
     }
 
     /**
@@ -252,17 +280,21 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['messages'] === null) {
-            $invalidProperties[] = "'messages' can't be null";
+        if ($this->container['credential'] === null) {
+            $invalidProperties[] = "'credential' can't be null";
         }
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) > 100)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be less than or equal to 100.";
+        if ($this->container['label'] === null) {
+            $invalidProperties[] = "'label' can't be null";
         }
-
-        if (!is_null($this->container['messages']) && (count($this->container['messages']) < 1)) {
-            $invalidProperties[] = "invalid value for 'messages', number of items must be greater than or equal to 1.";
+        if ($this->container['mailboxes'] === null) {
+            $invalidProperties[] = "'mailboxes' can't be null";
         }
-
+        if ($this->container['permissions'] === null) {
+            $invalidProperties[] = "'permissions' can't be null";
+        }
+        if ($this->container['team'] === null) {
+            $invalidProperties[] = "'team' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -276,35 +308,136 @@ class BatchSendRequest implements ModelInterface, ArrayAccess, JsonSerializable
 
 
     /**
-     * Gets messages
+     * Gets credential
      *
-     * @return \Sendmux\Sending\Model\EmailSendRequest[]
+     * @return \Sendmux\Sending\Model\ConnectionCredential
      */
-    public function getMessages(): array
+    public function getCredential(): \Sendmux\Sending\Model\ConnectionCredential
     {
-        return $this->container['messages'];
+        return $this->container['credential'];
     }
 
     /**
-     * Sets messages
+     * Sets credential
      *
-     * @param \Sendmux\Sending\Model\EmailSendRequest[] $messages Array of email messages to send (max 100)
+     * @param \Sendmux\Sending\Model\ConnectionCredential $credential credential
      *
      * @return $this
      */
-    public function setMessages(array $messages): static
+    public function setCredential(\Sendmux\Sending\Model\ConnectionCredential $credential): static
     {
-        if (is_null($messages)) {
-            throw new InvalidArgumentException('non-nullable messages cannot be null');
+        if (is_null($credential)) {
+            throw new InvalidArgumentException('non-nullable credential cannot be null');
         }
+        $this->container['credential'] = $credential;
 
-        if ((count($messages) > 100)) {
-            throw new InvalidArgumentException('invalid value for $messages when calling BatchSendRequest., number of items must be less than or equal to 100.');
+        return $this;
+    }
+
+    /**
+     * Gets label
+     *
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->container['label'];
+    }
+
+    /**
+     * Sets label
+     *
+     * @param string $label Display label for this connection.
+     *
+     * @return $this
+     */
+    public function setLabel(string $label): static
+    {
+        if (is_null($label)) {
+            throw new InvalidArgumentException('non-nullable label cannot be null');
         }
-        if ((count($messages) < 1)) {
-            throw new InvalidArgumentException('invalid length for $messages when calling BatchSendRequest., number of items must be greater than or equal to 1.');
+        $this->container['label'] = $label;
+
+        return $this;
+    }
+
+    /**
+     * Gets mailboxes
+     *
+     * @return \Sendmux\Sending\Model\ConnectionMailboxesInner[]
+     */
+    public function getMailboxes(): array
+    {
+        return $this->container['mailboxes'];
+    }
+
+    /**
+     * Sets mailboxes
+     *
+     * @param \Sendmux\Sending\Model\ConnectionMailboxesInner[] $mailboxes mailboxes
+     *
+     * @return $this
+     */
+    public function setMailboxes(array $mailboxes): static
+    {
+        if (is_null($mailboxes)) {
+            throw new InvalidArgumentException('non-nullable mailboxes cannot be null');
         }
-        $this->container['messages'] = $messages;
+        $this->container['mailboxes'] = $mailboxes;
+
+        return $this;
+    }
+
+    /**
+     * Gets permissions
+     *
+     * @return string[]
+     */
+    public function getPermissions(): array
+    {
+        return $this->container['permissions'];
+    }
+
+    /**
+     * Sets permissions
+     *
+     * @param string[] $permissions permissions
+     *
+     * @return $this
+     */
+    public function setPermissions(array $permissions): static
+    {
+        if (is_null($permissions)) {
+            throw new InvalidArgumentException('non-nullable permissions cannot be null');
+        }
+        $this->container['permissions'] = $permissions;
+
+        return $this;
+    }
+
+    /**
+     * Gets team
+     *
+     * @return \Sendmux\Sending\Model\ConnectionTeam
+     */
+    public function getTeam(): \Sendmux\Sending\Model\ConnectionTeam
+    {
+        return $this->container['team'];
+    }
+
+    /**
+     * Sets team
+     *
+     * @param \Sendmux\Sending\Model\ConnectionTeam $team team
+     *
+     * @return $this
+     */
+    public function setTeam(\Sendmux\Sending\Model\ConnectionTeam $team): static
+    {
+        if (is_null($team)) {
+            throw new InvalidArgumentException('non-nullable team cannot be null');
+        }
+        $this->container['team'] = $team;
 
         return $this;
     }
